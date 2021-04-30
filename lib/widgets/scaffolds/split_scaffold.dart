@@ -29,12 +29,13 @@ class SplitScaffold extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          //constraints: BoxConstraints(
-          //  minHeight: height,
-          //),
+          constraints: BoxConstraints(
+            minHeight: height,
+          ),
           child: Stack(
             children: [
               Container(
+                padding: EdgeInsets.only(top: clipHeight),
                 constraints: BoxConstraints(
                   minWidth: width,
                   minHeight: height,
