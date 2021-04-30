@@ -45,7 +45,7 @@ class MainSplitScreen extends StatelessWidget {
               colorTop: theme.cardColor,
               colorBottom: Color(0xFFFFFBEB),
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(8),
                 child: Center(
                   child: Wrap(
                     direction: Axis.horizontal,

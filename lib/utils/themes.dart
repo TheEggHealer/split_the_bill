@@ -18,5 +18,6 @@ final lightTheme = ThemeData(
 TextStyle font = TextStyle(
   fontFamily: 'Crimson',
   fontSize: 16,
-  fontWeight: FontWeight.bold
+  fontWeight: FontWeight.bold,
+  height: 1,
 );
