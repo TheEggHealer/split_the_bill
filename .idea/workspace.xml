@@ -23,6 +23,7 @@
       <change afterPath="$PROJECT_DIR$/lib/widgets/split_badge.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lib/widgets/split_done_row.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/models/split_item_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/split_item_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/models/split_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/split_model.dart" afterDir="false" />
@@ -42,7 +43,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="fed9aae2" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -57,11 +57,11 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/fonts" />
     <property name="settings.editor.selected.configurable" value="dart.settings" />
@@ -123,6 +123,7 @@
     <state x="461" y="162" key="SettingsEditor" timestamp="1619802470264">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="346" y="140" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1619822144989" />
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1619802470264" />
     <state x="656" y="252" width="607" height="536" key="find.popup" timestamp="1619798840145">
       <screen x="0" y="0" width="1920" height="1040" />
