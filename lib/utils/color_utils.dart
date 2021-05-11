@@ -49,7 +49,7 @@ class ColorUtils {
     if(existing.isEmpty) return _randomColor.randomColor();
 
     double threshold = 0.3;
-    Color color = _randomColor.randomColor(colorBrightness: ColorBrightness.light);
+    Color color = _randomColor.randomColor(colorBrightness: ColorBrightness.light, colorSaturation: ColorSaturation.highSaturation);
     int tries = 0;
     double bestScore = 0;
     Color bestColor = color;
@@ -68,8 +68,7 @@ class ColorUtils {
         bestScore = score;
         bestColor = color;
       }
-
-
+      
       tries++;
     }
 

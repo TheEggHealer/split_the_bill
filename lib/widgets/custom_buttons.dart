@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,4 +34,42 @@ Widget authButton({String text, Function onTap}) {
       ),
     ),
   );
+}
+
+Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap}) {
+  ThemeData theme = Get.theme;
+
+  ButtonStyle style = ButtonStyle(
+    elevation: MaterialStateProperty.all(5),
+    shadowColor: MaterialStateProperty.all(Color(0x60000000)),
+    backgroundColor: MaterialStateProperty.all<Color>(theme.accentColor),
+    foregroundColor: MaterialStateProperty.all(theme.backgroundColor),
+    overlayColor: MaterialStateProperty.all(theme.splashColor),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    )),
+  );
+
+  Widget button = SizedBox(
+    height: 32,
+    child: ElevatedButton(
+      style: style,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if(icon != null) Icon(icon, size: 15,),
+          SizedBox(width: 10,),
+          Text(
+            text,
+            style: theme.textTheme.bodyText2.apply(color: theme.backgroundColor),
+          ),
+        ],
+      ),
+      onPressed: onTap,
+    ),
+  );
+
+  if(expand) return Expanded(child: button,);
+  else return button;
 }

@@ -16,6 +16,8 @@ dependencies:
   intl: ^0.17.0
   random_color: ^1.0.5
   auto_size_text: ^2.1.0
+  badges: ^1.2.0
+  flutter_colorpicker: ^0.4.0
 
 dev_dependencies:
   flutter_native_splash: ^1.1.8+4
@@ -37,6 +39,17 @@ flutter:
           weight: 600
         - asset: assets/fonts/CrimsonText-Bold.ttf
           weight: 900
+    - family: RedHat
+      fonts:
+        - asset: assets/fonts/RedHatDisplay-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/RedHatDisplay-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/RedHatDisplay-Bold.ttf
+          weight: 900
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf
 
 flutter_native_splash:
   color: "#FCFCFC"

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:split_the_bill/utils/custom_icons.dart';
+import 'package:split_the_bill/utils/debugging.dart';
 import 'package:split_the_bill/widgets/clippers/split_appbar_clipper.dart';
 
 class SplitScaffold extends StatelessWidget {
@@ -32,6 +34,43 @@ class SplitScaffold extends StatelessWidget {
           constraints: BoxConstraints(
             minHeight: height,
           ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    icon,
+                    IconButton(
+                      icon: Icon(CustomIcons.sign_in),
+                      onPressed: () {debug('sign in');},
+                      iconSize: 30,
+                      splashRadius: 25,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: navButton == null ? 24 : 8),
+                child: Row(
+                  children: [
+                    if(navButton != null) navButton,
+                    Text(
+                      title,
+                      style: theme.textTheme.headline1,
+                    ),
+                  ],
+                ),
+              ),
+              body,
+            ],
+          ),
+
+          /*
           child: Stack(
             children: [
               Container(
@@ -73,7 +112,7 @@ class SplitScaffold extends StatelessWidget {
                   minWidth: width,
                   minHeight: clipHeight,
                 ),
-                padding: EdgeInsets.only(bottom: 15),
+                padding: EdgeInsets.only(bottom: 5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -108,8 +147,10 @@ class SplitScaffold extends StatelessWidget {
               )
             ],
           )
+           */
         ),
-      )
+      ),
+      floatingActionButton: fab,
     );
   }
 }

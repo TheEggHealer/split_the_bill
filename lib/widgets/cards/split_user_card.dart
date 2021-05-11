@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
+import 'package:split_the_bill/utils/custom_icons.dart';
 
 class SplitUserCard extends StatelessWidget {
   
   SplitUserModel _model;
+  bool onlyName;
   
-  SplitUserCard(this._model);
+  SplitUserCard(this._model, {this.onlyName = false});
   
   @override
   Widget build(BuildContext context) {
@@ -22,24 +24,25 @@ class SplitUserCard extends StatelessWidget {
       ),
       child: Container(
         width: 70,
-        height: 80,
-        padding: EdgeInsets.symmetric(horizontal: 3),
+        height: 85,
+        padding: EdgeInsets.symmetric(horizontal: 5),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.person,
+              CustomIcons.profile,
               color: _model.color,
               size: 30,
             ),
             AutoSizeText(
               '${_model.name}',
-              style: theme.textTheme.bodyText1,
+              style: theme.textTheme.headline4,
               maxLines: 1,
             ),
-            Text(
-              '${_model.difference}',
+            if(!onlyName) AutoSizeText(
+              signedString(_model.split),
               style: theme.textTheme.bodyText1,
+              maxLines: 1,
             ),
           ],
         ),

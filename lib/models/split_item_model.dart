@@ -3,29 +3,34 @@ import 'package:split_the_bill/models/split_user_model.dart';
 class SplitItemModel {
 
   String _itemName = '';
-  int _itemCost = 0;
+  double _itemCost = 0;
   SplitUserModel _buyer;
   List<SplitUserModel> _receivers = [];
 
   String get itemName => _itemName;
-  int get itemCost => _itemCost;
+  double get itemCost => _itemCost;
+  double get splitValue => _itemCost / receivers.length;
   SplitUserModel get buyer => _buyer;
   List<SplitUserModel> get receivers => _receivers;
 
-  void setItemName(String itemName) {
+  SplitItemModel setItemName(String itemName) {
     this._itemName = itemName;
+    return this;
   }
 
-  void setItemCost(int itemCost) {
+  SplitItemModel setItemCost(double itemCost) {
     this._itemCost = itemCost;
+    return this;
   }
 
-  void setBuyer(SplitUserModel buyer) {
+  SplitItemModel setBuyer(SplitUserModel buyer) {
     this._buyer = buyer;
+    return this;
   }
 
-  void setReceivers(List<SplitUserModel> receivers) {
+  SplitItemModel setReceivers(List<SplitUserModel> receivers) {
     this._receivers = receivers;
+    return this;
   }
 
 }
