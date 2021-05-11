@@ -1,4 +1,5 @@
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,8 +60,8 @@ Widget raisedButton({String text, bool expand = false, IconData icon, Function o
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if(icon != null) Icon(icon, size: 15,),
-          SizedBox(width: 10,),
-          Text(
+          SizedBox(width: 5,),
+          AutoSizeText(
             text,
             style: theme.textTheme.bodyText2.apply(color: theme.backgroundColor),
           ),

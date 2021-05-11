@@ -88,7 +88,7 @@ class AddSplitItem extends StatelessWidget {
                 child: inputField(
                   title: 'Cost',
                   controller: _costController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                   validator: (val) => val.isEmpty || double.tryParse(val) == null ? 'Enter valid number' : null,
                 ),
               ),
