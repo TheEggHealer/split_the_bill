@@ -11,6 +11,9 @@ import 'package:split_the_bill/widgets/scaffolds/split_scaffold.dart';
 
 class AddSplitItem extends StatelessWidget {
 
+  bool editing;
+  SplitItemModel editingModel;
+
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   var selectedBuyer = 0.obs;
@@ -20,7 +23,10 @@ class AddSplitItem extends StatelessWidget {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _costController = TextEditingController();
 
+
   AddSplitItem() {
+    editing = false;
+
     SplitController controller = Get.find();
 
     int buyerValue = 0;
@@ -31,24 +37,67 @@ class AddSplitItem extends StatelessWidget {
     }));
   }
 
+  AddSplitItem.edit(SplitItemModel model) {
+    editing = true;
+    editingModel = model;
+
+    SplitController controller = Get.find();
+
+    selectedBuyer = controller.users.indexOf(model.buyer).obs;
+
+    int buyerValue = 0;
+    _buyerList = List<UserRadioCard>.from(controller.users.map((u) => UserRadioCard(u, buyerValue++, selectedBuyer, (value) => selectedBuyer.value = value)));
+
+    _receiverList = List<UserToggleCard>.from(controller.users.map((u) {
+      return UserToggleCard(u, model.receivers.contains(u).obs);
+    }));
+
+    _titleController.text = model.itemName;
+    _costController.text = '${model.itemCost}';
+  }
+
   List<bool> getSelectedReceivers(List<UserToggleCard> cards) {
     return cards.map((c) => c.value).toList();
   }
 
-  void onDone() {
+  void onCreate() {
     SplitController controller = Get.find();
 
     SplitItemModel item = SplitItemModel();
-    List<bool> selectedReceivers = getSelectedReceivers(_receiverList);
     item.setBuyer(controller.users[selectedBuyer.value]);
 
     int index = 0;
+    List<bool> selectedReceivers = getSelectedReceivers(_receiverList);
     item.setReceivers(controller.users.where((user) => selectedReceivers[index++]).toList());
 
     item.setItemCost(double.parse(_costController.text));
     item.setItemName(_titleController.text.isEmpty ? 'Item ${controller.items.length + 1}' : _titleController.text);
 
     controller.addItem(item);
+    Get.back();
+  }
+
+  void onEdit() {
+    SplitController controller = Get.find();
+
+    editingModel.setBuyer(controller.users[selectedBuyer.value]);
+
+    int index = 0;
+    List<bool> selectedReceivers = getSelectedReceivers(_receiverList);
+    editingModel.setReceivers(controller.users.where((user) => selectedReceivers[index++]).toList());
+
+    editingModel.setItemCost(double.parse(_costController.text));
+    editingModel.setItemName(_titleController.text.isEmpty ? 'Item ${controller.items.length + 1}' : _titleController.text);
+
+    controller.calculateSplit();
+    controller.update();
+    Get.back();
+  }
+
+  void onDelete() {
+    SplitController controller = Get.find();
+
+    controller.removeItem(editingModel);
     Get.back();
   }
 
@@ -59,7 +108,7 @@ class AddSplitItem extends StatelessWidget {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom==0.0;
 
     return SplitScaffold(
-      title: 'Add item',
+      title: editing ? 'Edit item' : 'Add item',
       colorDark: Color(0xFFFFC9C9),
       colorLight: Color(0xFFFFE3E3),
       icon: SvgPicture.asset('assets/price_tag.svg'),
@@ -129,22 +178,47 @@ class AddSplitItem extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 60),
             ],
           ),
         ),
       ),
-      fab: showFab ? FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: 32,
-          color: theme.backgroundColor,
+      fab: showFab ? Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if(editing) FloatingActionButton(
+              child: Icon(
+                CustomIcons.trash,
+                size: 32,
+                color: theme.backgroundColor,
+              ),
+              backgroundColor: theme.errorColor,
+              onPressed: () {
+                onDelete();
+              },
+            ),
+            Spacer(
+              flex: 1,
+            ),
+            FloatingActionButton(
+              heroTag: 'done',
+              child: Icon(
+                Icons.add,
+                size: 32,
+                color: theme.backgroundColor,
+              ),
+              backgroundColor: theme.accentColor,
+              onPressed: () {
+                if(_formKey.currentState.validate() && getSelectedReceivers(_receiverList).any((selected) => selected)) {
+                  if(editing) onEdit();
+                  else onCreate();
+                }
+              },
+            ),
+          ]
         ),
-        backgroundColor: theme.accentColor,
-        onPressed: () {
-          if(_formKey.currentState.validate() && getSelectedReceivers(_receiverList).any((selected) => selected)) {
-            onDone();
-          }
-        },
       ) : null,
     );
   }

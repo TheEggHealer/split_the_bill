@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:split_the_bill/models/split_item_model.dart';
+import 'package:split_the_bill/screens/split/add_split_item.dart';
 import 'package:split_the_bill/utils/custom_icons.dart';
 import 'package:split_the_bill/widgets/split_badge.dart';
 
@@ -48,7 +49,9 @@ class SplitItemCard extends StatelessWidget {
                       icon: Icon(CustomIcons.edit),
                       iconSize: 20,
                       splashRadius: 20,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => AddSplitItem.edit(_model));
+                      },
                       padding: EdgeInsets.all(0),
                     ),
                   ),

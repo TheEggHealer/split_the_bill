@@ -37,13 +37,13 @@ Widget authButton({String text, Function onTap}) {
   );
 }
 
-Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap}) {
+Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap, Color color}) {
   ThemeData theme = Get.theme;
 
   ButtonStyle style = ButtonStyle(
     elevation: MaterialStateProperty.all(5),
     shadowColor: MaterialStateProperty.all(Color(0x60000000)),
-    backgroundColor: MaterialStateProperty.all<Color>(theme.accentColor),
+    backgroundColor: MaterialStateProperty.all<Color>(color == null ? theme.accentColor : color),
     foregroundColor: MaterialStateProperty.all(theme.backgroundColor),
     overlayColor: MaterialStateProperty.all(theme.splashColor),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(

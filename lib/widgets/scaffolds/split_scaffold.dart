@@ -15,7 +15,7 @@ class SplitScaffold extends StatelessWidget {
   final Color colorLight;
   final Color colorDark;
   final Widget body;
-  final FloatingActionButton fab;
+  final Widget fab;
 
   SplitScaffold({this.title, this.icon, this.navButton, this.colorDark, this.colorLight, this.body, this.fab});
 
@@ -29,6 +29,7 @@ class SplitScaffold extends StatelessWidget {
     double clipHeight = height * 0.2;
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Container(
           constraints: BoxConstraints(

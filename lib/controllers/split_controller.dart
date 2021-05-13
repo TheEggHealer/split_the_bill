@@ -37,6 +37,12 @@ class SplitController extends GetxController {
     refresh();
   }
 
+  void removeItem(SplitItemModel item) {
+    _model.value.items.remove(item);
+    calculateSplit();
+    refresh();
+  }
+
   void calculateSplit() {
     _model.value.users.forEach((user) => user.setSplit(0));
     _model.value.items.forEach((item) {
@@ -44,5 +50,6 @@ class SplitController extends GetxController {
       item.receivers.forEach((user) => user.addSplit(item.splitValue));
     });
   }
+
 
 }

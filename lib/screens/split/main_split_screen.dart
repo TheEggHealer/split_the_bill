@@ -96,6 +96,7 @@ class MainSplitScreen extends StatelessWidget {
             ),
           ),
           fab: FloatingActionButton(
+            heroTag: 'done',
             child: Icon(
               Icons.add,
               size: 32,

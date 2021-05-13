@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
+import 'package:split_the_bill/dialogs/color_picker_dialog.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
 import 'package:split_the_bill/utils/color_utils.dart';
 import 'package:split_the_bill/utils/custom_icons.dart';
@@ -14,15 +15,15 @@ class AddSplitUser extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController _nameController = TextEditingController();
-  Color _selectedColor;
+  Rx<Color> _selectedColor;
   SplitController controller = Get.find();
 
   AddSplitUser() {
-    _selectedColor = ColorUtils.randomUnique(controller.users.map((u) => u.color).toList());
+    _selectedColor = ColorUtils.randomUnique(controller.users.map((u) => u.color).toList()).obs;
   }
 
   void onDone() {
-    SplitUserModel user = SplitUserModel(_nameController.text, _selectedColor);
+    SplitUserModel user = SplitUserModel(_nameController.text, _selectedColor.value);
     controller.addUser(user);
     Get.back();
   }
@@ -63,13 +64,20 @@ class AddSplitUser extends StatelessWidget {
               SizedBox(height: 10),
               Row(
                 children: [
-                  UserColorPreviewCard(_selectedColor),
+                  Obx(() => UserColorPreviewCard(_selectedColor.value)),
                   SizedBox(width: 10,),
                   Material(
                     color: Colors.transparent,
                     child: IconButton(
                       icon: Icon(CustomIcons.color_picker),
-                      onPressed: () => debug('Color picker'),
+                      onPressed: () {
+                        Get.dialog(ColorPickerDialog(
+                          currentColor: _selectedColor.value.obs,
+                          onDone: (color) {
+                            _selectedColor.value = color;
+                          }
+                        ));
+                      },
                       splashRadius: 20,
                     ),
                   ),
