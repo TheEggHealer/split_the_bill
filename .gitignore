@@ -32,3 +32,5 @@ doc/api/
 .idea/workspace.xml
 .idea/libraries/Dart_SDK.xml
 .idea/libraries/Dart_SDK.xml
+.idea/libraries/Flutter_Plugins.xml
+.idea/libraries/KotlinJavaRuntime.xml
