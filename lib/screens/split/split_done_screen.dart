@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
+import 'package:split_the_bill/models/payment_model.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
-import 'package:split_the_bill/models/user_model.dart';
 import 'package:split_the_bill/utils/custom_icons.dart';
 import 'package:split_the_bill/utils/debugging.dart';
 import 'package:split_the_bill/widgets/cards/gradient_card.dart';
@@ -15,9 +16,15 @@ import 'package:split_the_bill/widgets/split_done_row.dart';
 
 class SplitDoneScreen extends StatelessWidget {
 
-  List<SplitDoneRow> calculateSplit() {
+
+
+  List<SplitDoneRow> splitRows(List<PaymentModel> payments) {
+    return payments.map((payment) => SplitDoneRow(payment)).toList();
+  }
+
+  List<PaymentModel> calculate() {
     SplitController controller = Get.find();
-    List<SplitDoneRow> rows = [];
+    List<PaymentModel> payments = [];
 
     List<SplitUserModel> senders = controller.users.where((user) => user.split > 0).map((user) => SplitUserModel.clone(user)).toList();
     List<SplitUserModel> receivers = controller.users.where((user) => user.split < 0).map((user) => SplitUserModel.clone(user)).toList();
@@ -32,10 +39,10 @@ class SplitDoneScreen extends StatelessWidget {
       sender.subtractSplit(amount);
       receiver.addSplit(amount);
 
-      rows.add(SplitDoneRow(
-        sender,
-        receiver,
-        amount
+      payments.add(PaymentModel(
+          sender,
+          receiver,
+          amount
       ));
 
       if(sender.split == 0) senders.remove(sender);
@@ -44,16 +51,26 @@ class SplitDoneScreen extends StatelessWidget {
       debug('Created split between ${sender.name} and ${receiver.name} for $amount');
     }
 
-    return rows;
+    return payments;
+  }
+
+  void copySplitString(List<PaymentModel> payments) {
+    String resultString = '';
+
+    payments.forEach((payment) {
+      resultString += '${payment.sender.name} -> ${signedString(payment.amount, withPlus: false)} -> ${payment.receiver.name}\n';
+    });
+
+    Clipboard.setData(ClipboardData(text: resultString));
+    Get.snackbar('Split the bill', 'Copied to clipboard');
+    debug(resultString);
   }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Get.theme;
-    UserModel user = Get.find();
 
-
-
+    List<PaymentModel> payments = calculate();
 
     return GetBuilder<SplitController>(
       builder: (controller) {
@@ -85,7 +102,7 @@ class SplitDoneScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 15),
                         Column(
-                          children: calculateSplit(),
+                          children: splitRows(payments),
                         ),
                         SizedBox(height: 30,),
                         Row(
@@ -95,7 +112,7 @@ class SplitDoneScreen extends StatelessWidget {
                               icon: CustomIcons.copy,
                               expand: true,
                               onTap: () {
-
+                                copySplitString(payments);
                               },
                             ),
                             SizedBox(width: 25,),

@@ -6,6 +6,7 @@ import 'package:split_the_bill/models/split_item_model.dart';
 import 'package:split_the_bill/utils/custom_icons.dart';
 import 'package:split_the_bill/widgets/cards/user_radio_card.dart';
 import 'package:split_the_bill/widgets/cards/user_toggle_card.dart';
+import 'package:split_the_bill/widgets/custom_buttons.dart';
 import 'package:split_the_bill/widgets/custom_input_fields.dart';
 import 'package:split_the_bill/widgets/scaffolds/split_scaffold.dart';
 
@@ -29,6 +30,7 @@ class AddSplitItem extends StatelessWidget {
 
     SplitController controller = Get.find();
 
+    selectedBuyer = (controller.items.isNotEmpty ? controller.users.indexOf(controller.items.last.buyer) : 0).obs;
     int buyerValue = 0;
     _buyerList = List<UserRadioCard>.from(controller.users.map((u) => UserRadioCard(u, buyerValue++, selectedBuyer, (value) => selectedBuyer.value = value)));
 
@@ -70,8 +72,8 @@ class AddSplitItem extends StatelessWidget {
     List<bool> selectedReceivers = getSelectedReceivers(_receiverList);
     item.setReceivers(controller.users.where((user) => selectedReceivers[index++]).toList());
 
-    item.setItemCost(double.parse(_costController.text));
-    item.setItemName(_titleController.text.isEmpty ? 'Item ${controller.items.length + 1}' : _titleController.text);
+    item.setItemCost(double.parse(_costController.text.trim()));
+    item.setItemName(_titleController.text.trim().isEmpty ? 'Item ${controller.items.length + 1}' : _titleController.text.trim());
 
     controller.addItem(item);
     Get.back();
@@ -155,9 +157,21 @@ class AddSplitItem extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
-              Text(
-                'Receiver(s)',
-                style: theme.textTheme.headline2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Receiver(s)',
+                    style: theme.textTheme.headline2,
+                  ),
+                  raisedButton(
+                    text: 'Toggle all',
+                    onTap: () {
+                      if(getSelectedReceivers(_receiverList).any((e) => !e)) _receiverList.forEach((user) {user.setValue(true);});
+                      else _receiverList.forEach((user) {user.setValue(false);});
+                    }
+                  )
+                ],
               ),
               SizedBox(height: 10),
               SingleChildScrollView(
@@ -178,47 +192,44 @@ class AddSplitItem extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 60),
+              SizedBox(height: 260),
             ],
           ),
         ),
       ),
-      fab: showFab ? Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            if(editing) FloatingActionButton(
-              child: Icon(
-                CustomIcons.trash,
-                size: 32,
-                color: theme.backgroundColor,
-              ),
-              backgroundColor: theme.errorColor,
-              onPressed: () {
-                onDelete();
-              },
+      fab: showFab ? Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if(editing) FloatingActionButton(
+            child: Icon(
+              CustomIcons.trash,
+              size: 32,
+              color: theme.backgroundColor,
             ),
-            Spacer(
-              flex: 1,
+            backgroundColor: theme.errorColor,
+            onPressed: () {
+              onDelete();
+            },
+          ),
+          Spacer(
+            flex: 1,
+          ),
+          FloatingActionButton(
+            heroTag: 'done',
+            child: Icon(
+              Icons.done,
+              size: 32,
+              color: theme.backgroundColor,
             ),
-            FloatingActionButton(
-              heroTag: 'done',
-              child: Icon(
-                Icons.add,
-                size: 32,
-                color: theme.backgroundColor,
-              ),
-              backgroundColor: theme.accentColor,
-              onPressed: () {
-                if(_formKey.currentState.validate() && getSelectedReceivers(_receiverList).any((selected) => selected)) {
-                  if(editing) onEdit();
-                  else onCreate();
-                }
-              },
-            ),
-          ]
-        ),
+            backgroundColor: theme.accentColor,
+            onPressed: () {
+              if(_formKey.currentState.validate() && getSelectedReceivers(_receiverList).any((selected) => selected)) {
+                if(editing) onEdit();
+                else onCreate();
+              }
+            },
+          ),
+        ]
       ) : null,
     );
   }

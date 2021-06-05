@@ -35,7 +35,7 @@ class MainSplitScreen extends StatelessWidget {
       //},
       builder: (controller) {
 
-        List<SplitUserCard> _userCards = List<SplitUserCard>.from(controller.users.map((u) => SplitUserCard(u)));
+        List<SplitUserCard> _userCards = List<SplitUserCard>.from(controller.users.map((u) => SplitUserCard(u, editable: true,)));
         List<SplitItemCard> _itemCards = List<SplitItemCard>.from(controller.items.map((i) => SplitItemCard(i)));
 
         return SplitScaffold(
@@ -49,7 +49,7 @@ class MainSplitScreen extends StatelessWidget {
               children: [
                 GradientCard(
                   colorTop: theme.cardColor,
-                  colorBottom: Color(0xFFFFFBEB),
+                  colorBottom: Color(0xFFEEFFE7),
                   child: Container(
                     padding: EdgeInsets.all(8),
                     child: Column(
@@ -91,7 +91,7 @@ class MainSplitScreen extends StatelessWidget {
                 Column(
                   children: _itemCards,
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: 100),
               ],
             ),
           ),

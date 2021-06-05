@@ -11,12 +11,13 @@ class SplitUserModel {
 
   static RandomColor _randomColor = RandomColor();
 
+  bool mainUser;
   String _name = '';
   Color _color;
   double _split = 0;
   UserModel _linkedUser;
 
-  SplitUserModel(this._name, this._color);
+  SplitUserModel(this._name, this._color, {this.mainUser = false});
 
   SplitUserModel.random(this._name, SplitModel splitModel) {
     _color = ColorUtils.randomUnique(splitModel.users.map((u) => u.color).toList());
@@ -51,6 +52,14 @@ class SplitUserModel {
   void linkUser(UserModel user) {
     _linkedUser = user;
     debug('Linked user: $user');
+  }
+
+  void setName(String name) {
+    this._name = name;
+  }
+
+  void setColor(Color color) {
+    this._color = color;
   }
 
 }

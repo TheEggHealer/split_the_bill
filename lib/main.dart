@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:split_the_bill/screens/authentication/launch_screen.dart';
 import 'package:split_the_bill/screens/screen_wrapper.dart';
 import 'package:split_the_bill/screens/split/main_split_screen.dart';
+import 'package:split_the_bill/utils/debugging.dart';
 import 'package:split_the_bill/utils/themes.dart';
 
-void main() {
+Future<void> main() async {
+  await GetStorage.init();
   runApp(Main());
 }
 

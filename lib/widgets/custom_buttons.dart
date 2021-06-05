@@ -60,7 +60,7 @@ Widget raisedButton({String text, bool expand = false, IconData icon, Function o
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if(icon != null) Icon(icon, size: 15,),
-          SizedBox(width: 5,),
+          if(icon != null) SizedBox(width: 5,),
           AutoSizeText(
             text,
             style: theme.textTheme.bodyText2.apply(color: theme.backgroundColor),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
 import 'package:split_the_bill/dialogs/color_picker_dialog.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
@@ -13,19 +14,67 @@ import 'package:split_the_bill/widgets/scaffolds/split_scaffold.dart';
 
 class AddSplitUser extends StatelessWidget {
 
+  bool editing;
+  bool creating;
+  SplitUserModel editingModel;
+
   final GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController _nameController = TextEditingController();
   Rx<Color> _selectedColor;
-  SplitController controller = Get.find();
+  SplitController controller;
 
   AddSplitUser() {
+    controller = Get.find();
+    editing = false;
+    creating = false;
     _selectedColor = ColorUtils.randomUnique(controller.users.map((u) => u.color).toList()).obs;
   }
 
-  void onDone() {
-    SplitUserModel user = SplitUserModel(_nameController.text, _selectedColor.value);
+  AddSplitUser.edit(SplitUserModel model) {
+    controller = Get.find();
+    editing = true;
+    creating = true;
+    editingModel = model;
+    _selectedColor = model.color.obs;
+    _nameController.text = model.name;
+  }
+
+  AddSplitUser.create() {
+    editing = false;
+    creating = true;
+    _selectedColor = ColorUtils.random();
+  }
+
+  void onAdd() {
+    SplitUserModel user = SplitUserModel(_nameController.text.trim(), _selectedColor.value);
     controller.addUser(user);
     Get.back();
+  }
+
+  void onEdit() {
+    editingModel.setName(_nameController.text.trim());
+    editingModel.setColor(_selectedColor.value);
+
+    if(editingModel.mainUser) {
+      GetStorage().write('userName', _nameController.text.trim());
+      GetStorage().write('userColor', _selectedColor.value.value);
+    }
+
+    controller.update();
+    Get.back();
+  }
+
+  void onCreate() {
+    SplitUserModel user = SplitUserModel(_nameController.text.trim(), _selectedColor.value);
+
+    GetStorage().write('userName', user.name);
+    GetStorage().write('userColor', user.color.value);
+
+    Get.back(result: user);
+  }
+
+  void onDelete() {
+    debug('Delete this user, show a warning');
   }
 
   @override
@@ -34,7 +83,7 @@ class AddSplitUser extends StatelessWidget {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom==0.0;
 
     return SplitScaffold(
-      title: 'Add person',
+      title: editing ? 'Edit person' : creating ? 'Who are you?' : 'Add person',
       colorLight: Color(0xFFE9F7FF),
       colorDark: Color(0xFFC9EBFF),
       icon: SvgPicture.asset('assets/new_person.svg'),
@@ -87,19 +136,57 @@ class AddSplitUser extends StatelessWidget {
           ),
         ),
       ),
-      fab: showFab ? FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: 32,
-          color: theme.backgroundColor,
-        ),
-        backgroundColor: theme.accentColor,
-        onPressed: () {
-          if(_formKey.currentState.validate()) {
-            onDone();
-          }
-        },
+      fab: showFab ? Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if(editing && !editingModel.mainUser) FloatingActionButton(
+              child: Icon(
+                CustomIcons.trash,
+                size: 32,
+                color: theme.backgroundColor,
+              ),
+              backgroundColor: theme.errorColor,
+              onPressed: () {
+                onDelete();
+              },
+            ),
+            Spacer(
+              flex: 1,
+            ),
+            FloatingActionButton(
+              heroTag: 'done',
+              child: Icon(
+                Icons.done,
+                size: 32,
+                color: theme.backgroundColor,
+              ),
+              backgroundColor: theme.accentColor,
+              onPressed: () {
+                if(_formKey.currentState.validate()) {
+                  if(editing) onEdit();
+                  else if(creating) onCreate();
+                  else onAdd();
+                }
+              },
+            ),
+          ]
       ) : null,
+
+      //fab: showFab ? FloatingActionButton(
+      //  child: Icon(
+      //    Icons.add,
+      //    size: 32,
+      //    color: theme.backgroundColor,
+      //  ),
+      //  backgroundColor: theme.accentColor,
+      //  onPressed: () {
+      //    if(_formKey.currentState.validate()) {
+      //      if(editing) onEdit();
+      //      else onCreate();
+      //    }
+      //  },
+      //) : null,
     );
   }
 }

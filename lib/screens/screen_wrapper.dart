@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:split_the_bill/models/user_model.dart';
 import 'package:split_the_bill/screens/authentication/launch_screen.dart';
 import 'package:split_the_bill/screens/split/main_split_screen.dart';
+import 'package:split_the_bill/utils/debugging.dart';
 
 class ScreenWrapper extends StatelessWidget {
 
-  final UserModel user = UserModel('Jonathan'.obs, Color(0xFFB76868).obs);
+  UserModel _user;
+
+  void getUserFromStorage(UserModel user) {
+    if(GetStorage().read('userName') != null && GetStorage().read('userColor') != null) {
+      String name = GetStorage().read('userName');
+      Color color = Color(GetStorage().read('userColor'));
+      user.create(name, color);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    Get.put(user);
+    debug('reloading');
 
-    return Obx(
-      () => user.signedIn.value ? MainSplitScreen() : LaunchScreen(),
+    return GetBuilder<UserModel>(
+      init: UserModel('initial'.obs, Colors.black.obs, created: false.obs),
+      builder: (user) {
+        Get.put(user);
+        getUserFromStorage(user);
+
+        return user.created.value ? MainSplitScreen() : LaunchScreen();
+      },
     );
-    switch (user.signedIn.value) {
-      case true: return MainSplitScreen();
-      case false: return LaunchScreen();
-    }
   }
 }

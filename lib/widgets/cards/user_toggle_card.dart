@@ -13,6 +13,10 @@ class UserToggleCard extends StatelessWidget {
 
   bool get value => _value.value;
 
+  void setValue(bool value) {
+    if(_value.value != value) _value.toggle();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Get.theme;

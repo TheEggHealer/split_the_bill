@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:random_color/random_color.dart';
 import 'package:split_the_bill/utils/debugging.dart';
 
@@ -80,6 +81,10 @@ class ColorUtils {
   static double _uniqueScore(Color color, List<Color> existing) {
     List<double> scores = existing.map((c) => differenceRGB(color, c)).toList();
     return scores.reduce(min);
+  }
+
+  static Rx<Color> random() {
+    return _randomColor.randomColor(colorBrightness: ColorBrightness.light, colorSaturation: ColorSaturation.highSaturation).obs;
   }
 
 }

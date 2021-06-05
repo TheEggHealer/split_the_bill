@@ -9,7 +9,7 @@ class SplitController extends GetxController {
   Rx<SplitModel> _model = SplitModel().obs;
 
   SplitController(UserModel initialUser) {
-    addUser(SplitUserModel(initialUser.name.value, initialUser.color.value));
+    addUser(SplitUserModel(initialUser.name.value, initialUser.color.value, mainUser: true));
   }
 
   get model => _model.value;
