@@ -43,22 +43,24 @@ class CustomDialog extends StatelessWidget {
               ),
               SizedBox(height: 10),
               content,
+              SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  raisedButton(
-                    text: acceptButton,
-                    icon: Icons.done,
-                    onTap: onAccept,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
                   raisedButton(
                     text: denyButton,
                     icon: Icons.close,
                     onTap: onDeny,
                     color: theme.errorColor
-                  )
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  raisedButton(
+                    text: acceptButton,
+                    icon: Icons.done,
+                    onTap: onAccept,
+                  ),
                 ],
               )
             ],

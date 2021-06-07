@@ -192,7 +192,7 @@ class AddSplitItem extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 260),
+              SizedBox(height: 80),
             ],
           ),
         ),

@@ -9,8 +9,6 @@ import 'package:split_the_bill/utils/debugging.dart';
 
 class ScreenWrapper extends StatelessWidget {
 
-  UserModel _user;
-
   void getUserFromStorage(UserModel user) {
     if(GetStorage().read('userName') != null && GetStorage().read('userColor') != null) {
       String name = GetStorage().read('userName');

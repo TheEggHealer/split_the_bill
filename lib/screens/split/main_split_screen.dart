@@ -76,6 +76,7 @@ class MainSplitScreen extends StatelessWidget {
                                 text: 'Solve split',
                                 icon: Icons.done,
                                 expand: true,
+                                enabled: controller.canSplit,
                                 onTap: () {
                                   Get.to(() => SplitDoneScreen());
                                 },

@@ -12,14 +12,32 @@ class SplitUserCard extends StatelessWidget {
   SplitUserModel _model;
   bool onlyName;
   bool editable;
+  bool guide = false;
   
   SplitUserCard(this._model, {this.onlyName = false, this.editable = false});
+
+  SplitUserCard.guide() {
+    guide = true;
+  }
   
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Get.theme;
-    
-    return Stack(
+    if(guide) {
+      return Card(
+        elevation: 0,
+        color: Color(0xff818181).withAlpha(25),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Container(
+          width: 70,
+          height: 85,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+        ),
+      );
+    }
+    else return Stack(
       alignment: Alignment.center,
       children: [
         Card(

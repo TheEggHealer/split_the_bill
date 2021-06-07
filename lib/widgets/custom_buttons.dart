@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/*
 Widget authButton({String text, Function onTap}) {
   ThemeData theme = Get.theme;
 
@@ -18,6 +19,7 @@ Widget authButton({String text, Function onTap}) {
       width: 2.5,
       color: theme.primaryColor,
     )),
+
   );
 
   return Padding(
@@ -36,14 +38,61 @@ Widget authButton({String text, Function onTap}) {
     ),
   );
 }
+*/
 
-Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap, Color color}) {
+Widget authButton({String text, Function onTap}) {
   ThemeData theme = Get.theme;
 
   ButtonStyle style = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+    overlayColor: MaterialStateProperty.all(theme.splashColor),
+    padding: MaterialStateProperty.all(EdgeInsets.zero),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(25),
+    )),
     elevation: MaterialStateProperty.all(5),
     shadowColor: MaterialStateProperty.all(Color(0x60000000)),
-    backgroundColor: MaterialStateProperty.all<Color>(color == null ? theme.accentColor : color),
+  );
+
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 40),
+    child: SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: style,
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xffF5DF90), Color(0xffE9C48D)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Container(
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                text,
+                style: theme.textTheme.button,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap, Color color, bool enabled = true}) {
+  ThemeData theme = Get.theme;
+
+  ButtonStyle style = ButtonStyle(
+    elevation: MaterialStateProperty.all(enabled ? 5 : 0),
+    shadowColor: MaterialStateProperty.all(Color(0x60000000)),
+    backgroundColor: MaterialStateProperty.all<Color>(enabled ? (color == null ? theme.accentColor : color) : theme.disabledColor),
     foregroundColor: MaterialStateProperty.all(theme.backgroundColor),
     overlayColor: MaterialStateProperty.all(theme.splashColor),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(
@@ -58,6 +107,7 @@ Widget raisedButton({String text, bool expand = false, IconData icon, Function o
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           if(icon != null) Icon(icon, size: 15,),
           if(icon != null) SizedBox(width: 5,),
@@ -67,7 +117,7 @@ Widget raisedButton({String text, bool expand = false, IconData icon, Function o
           ),
         ],
       ),
-      onPressed: onTap,
+      onPressed: enabled ? onTap : null,
     ),
   );
 

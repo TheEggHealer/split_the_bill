@@ -8,6 +8,7 @@ final lightTheme = ThemeData(
   splashColor: Color(0x11000000),
   hintColor: Color(0xff969696),
   errorColor: Color(0xffDA5B5B),
+  disabledColor: Color(0xff818181).withAlpha(50),
 
   textTheme: TextTheme(
     headline1: bold.apply(color: Color(0xff343434), fontSizeFactor: 2),
@@ -17,7 +18,7 @@ final lightTheme = ThemeData(
     bodyText1: font.apply(color: Color(0xff343434), fontSizeFactor: 1),
     bodyText2: font.apply(color: Color(0xff343434), fontSizeFactor: 0.85),
     subtitle1: font.apply(color: Color(0xff343434), fontSizeFactor: 1.3),
-    button:    font.apply(color: Color(0xff343434), fontSizeFactor: 1),
+    button:    bold.apply(color: Color(0xffFCFCFC), fontSizeFactor: 1.1),
   ),
 );
 

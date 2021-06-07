@@ -10,8 +10,9 @@ import 'package:split_the_bill/widgets/split_badge.dart';
 class SplitItemCard extends StatelessWidget {
 
   SplitItemModel _model;
+  bool guide;
 
-  SplitItemCard(this._model);
+  SplitItemCard(this._model, {this.guide = false});
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +50,9 @@ class SplitItemCard extends StatelessWidget {
                       icon: Icon(CustomIcons.edit),
                       iconSize: 20,
                       splashRadius: 20,
-                      onPressed: () {
+                      onPressed: !guide ? () {
                         Get.to(() => AddSplitItem.edit(_model));
-                      },
+                      } : null,
                       padding: EdgeInsets.all(0),
                     ),
                   ),

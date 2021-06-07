@@ -9,14 +9,46 @@ import 'package:split_the_bill/widgets/cards/split_user_card.dart';
 class SplitDoneRow extends StatelessWidget {
 
   PaymentModel _model;
+  bool guide = false;
 
   SplitDoneRow(this._model);
+
+  SplitDoneRow.guide() {
+    guide = true;
+  }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Get.theme;
 
-    return Row(
+    if(guide) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SplitUserCard.guide(),
+          Container(
+            width: 80,
+            child: Column(
+              children: [
+                Container(
+                  width: 20,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: theme.disabledColor,
+                  ),
+                ),
+                Icon(
+                  CustomIcons.arrow,
+                  color: theme.hintColor.withAlpha(80),
+                )
+              ],
+            ),
+          ),
+          SplitUserCard.guide(),
+        ],
+      );
+    } else return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SplitUserCard(_model.sender, onlyName: true,),

@@ -1,9 +1,15 @@
+import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
 import 'package:split_the_bill/models/payment_model.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
@@ -15,8 +21,7 @@ import 'package:split_the_bill/widgets/scaffolds/split_scaffold.dart';
 import 'package:split_the_bill/widgets/split_done_row.dart';
 
 class SplitDoneScreen extends StatelessWidget {
-
-
+  GlobalKey _globalKey = GlobalKey();
 
   List<SplitDoneRow> splitRows(List<PaymentModel> payments) {
     return payments.map((payment) => SplitDoneRow(payment)).toList();
@@ -66,11 +71,25 @@ class SplitDoneScreen extends StatelessWidget {
     debug(resultString);
   }
 
+  Future<void> share() async {
+    RenderRepaintBoundary boundary = _globalKey.currentContext.findRenderObject();
+    ui.Image image = await boundary.toImage(pixelRatio: 4);
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+
+    String directory = (await getApplicationDocumentsDirectory()).path + '/share.png';
+    File file = await File(directory).create();
+    await file.writeAsBytes(pngBytes);
+
+    await Share.shareFiles(['$directory']);
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Get.theme;
 
     List<PaymentModel> payments = calculate();
+    List<SplitDoneRow> rows = splitRows(payments);
 
     return GetBuilder<SplitController>(
       builder: (controller) {
@@ -88,46 +107,52 @@ class SplitDoneScreen extends StatelessWidget {
             padding: EdgeInsets.all(24),
             child: Column(
               children: [
-                GradientCard(
-                  colorTop: Color(0xFFFFFFFF),
-                  colorBottom: Color(0xFFEFFFF4),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Optimal split',
-                          style: theme.textTheme.headline2,
-                        ),
-                        SizedBox(height: 15),
-                        Column(
-                          children: splitRows(payments),
-                        ),
-                        SizedBox(height: 30,),
-                        Row(
-                          children: [
-                            raisedButton(
-                              text: 'Copy as text',
-                              icon: CustomIcons.copy,
-                              expand: true,
-                              onTap: () {
-                                copySplitString(payments);
-                              },
-                            ),
-                            SizedBox(width: 25,),
-                            raisedButton(
-                              text: 'Share',
-                              icon: CustomIcons.edit,
-                              expand: true,
-                              onTap: () {
-
-                              },
-                            ),
-                          ],
-                        )
-                      ],
+                RepaintBoundary(
+                  key: _globalKey,
+                  child: GradientCard(
+                    colorTop: Color(0xFFFFFFFF),
+                    colorBottom: Color(0xFFEFFFF4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Optimal split',
+                            style: theme.textTheme.headline2,
+                          ),
+                          SizedBox(height: 15),
+                          Column(
+                            children: rows,
+                          ),
+                          SizedBox(height: 30,),
+                        ],
+                      ),
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      raisedButton(
+                        text: 'Copy as text',
+                        icon: CustomIcons.copy,
+                        expand: true,
+                        onTap: () {
+                          copySplitString(payments);
+                        },
+                      ),
+                      SizedBox(width: 25,),
+                      raisedButton(
+                        text: 'Share',
+                        icon: CustomIcons.edit,
+                        expand: true,
+                        onTap: () {
+                          share();
+                        },
+                      ),
+                    ],
                   ),
                 )
               ],

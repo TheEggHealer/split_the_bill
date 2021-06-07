@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
 import 'package:split_the_bill/dialogs/color_picker_dialog.dart';
+import 'package:split_the_bill/dialogs/delete_user_dialog.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
 import 'package:split_the_bill/utils/color_utils.dart';
 import 'package:split_the_bill/utils/custom_icons.dart';
@@ -73,8 +74,18 @@ class AddSplitUser extends StatelessWidget {
     Get.back(result: user);
   }
 
-  void onDelete() {
-    debug('Delete this user, show a warning');
+  void onDelete() async {
+    SplitController controller = Get.find();
+
+    await Get.dialog(DeleteUserDialog(
+      callback: (ans) {
+        if(ans) {
+          controller.removeUser(editingModel);
+        }
+      },
+    ));
+
+    Get.back();
   }
 
   @override

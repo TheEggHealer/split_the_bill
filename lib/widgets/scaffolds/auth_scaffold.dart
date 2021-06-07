@@ -13,9 +13,8 @@ class AuthScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    double height = Get.height;
     ThemeData theme = Get.theme;
-
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -23,27 +22,42 @@ class AuthScaffold extends StatelessWidget {
           constraints: BoxConstraints(
             minHeight: height,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            fit: StackFit.passthrough,
+            alignment: Alignment.center,
             children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20, top: 120),
+                    child: Center(
+                      child: SizedBox(
+                        width: height / 3.2,
+                        height: height / 3.2,
+                        child: icon,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    title,
+                    style: theme.textTheme.headline1,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 120),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: body,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: Center(
-                  child: SizedBox(
-                    width: height / 3.2,
-                    height: height / 3.2,
-                    child: icon,
-                  ),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SvgPicture.asset('assets/devyne_banner.svg'),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 70.0),
-                child: Text(
-                  title,
-                  style: theme.textTheme.headline1,
-                ),
-              ),
-              body
             ],
           ),
         ),

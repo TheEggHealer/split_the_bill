@@ -19,6 +19,7 @@ dependencies:
   badges: ^1.2.0
   flutter_colorpicker: ^0.4.0
   get_storage: ^2.0.2
+  share_plus: ^2.1.2
 
 dev_dependencies:
   flutter_native_splash: ^1.1.8+4
