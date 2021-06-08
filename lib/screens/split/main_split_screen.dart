@@ -28,12 +28,7 @@ class MainSplitScreen extends StatelessWidget {
 
     return GetBuilder<SplitController>(
       init: controller,
-      //initState: (c) {
-      //  controller.users.add(SplitUserModel.random('Jonathan', controller.model));
-      //  debug(controller.users);
-      //},
       builder: (controller) {
-
         List<SplitUserCard> _userCards = List<SplitUserCard>.from(controller.users.map((u) => SplitUserCard(u, editable: true,)));
         List<SplitItemCard> _itemCards = List<SplitItemCard>.from(controller.items.map((i) => SplitItemCard(i)));
 
@@ -43,14 +38,14 @@ class MainSplitScreen extends StatelessWidget {
           colorLight: Color(0xFFFFFCE3),
           icon: SvgPicture.asset('assets/split_dollar.svg'),
           rightButton: IconButton(
-            icon: Icon(CustomIcons.sign_in),
-            onPressed: () {
+            icon: Icon(CustomIcons.reset),
+            onPressed: controller.canReset ? () {
               Get.dialog(ResetConfirmationDialog(
                 callback: (ans) {
                   if(ans) controller.reset();
                 },
               ));
-            },
+            } : null,
             splashRadius: 20,
             iconSize: 30,
           ),

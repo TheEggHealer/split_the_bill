@@ -16,6 +16,7 @@ class SplitController extends GetxController {
   List<SplitUserModel> get users => _model.value.users;
   List<SplitItemModel> get items => _model.value.items;
   bool get canSplit => users.isNotEmpty && items.isNotEmpty && items.any((item) => !item.receivers.contains(users.first) || item.receivers.length > 1);
+  bool get canReset => users.length > 1 || items.isNotEmpty;
 
   void setUsers(List<SplitUserModel> users) {
     _model.value.users = users;

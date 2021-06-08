@@ -24,8 +24,15 @@ dependencies:
 
 dev_dependencies:
   flutter_native_splash: ^1.1.8+4
+  flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path_android: "assets/launcher_icons/launcher_android.png"
+  image_path_ios: "assets/launcher_icons/launcher_ios.png"
 
 flutter:
   uses-material-design: true
@@ -34,14 +41,6 @@ flutter:
     - assets/
 
   fonts:
-    - family: Crimson
-      fonts:
-        - asset: assets/fonts/CrimsonText-Regular.ttf
-          weight: 300
-        - asset: assets/fonts/CrimsonText-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/CrimsonText-Bold.ttf
-          weight: 900
     - family: RedHat
       fonts:
         - asset: assets/fonts/RedHatDisplay-Regular.ttf

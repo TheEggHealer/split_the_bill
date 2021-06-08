@@ -14,7 +14,7 @@ class ResetConfirmationDialog extends StatelessWidget {
     ThemeData theme = Get.theme;
 
     return CustomDialog(
-      icon: CustomIcons.sign_in,
+      icon: CustomIcons.reset,
       title: 'Reset split',
       content: Text(
         'Resetting the split will remove all items and users except you. Are you sure?',
