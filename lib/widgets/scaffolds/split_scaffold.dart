@@ -4,9 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:split_the_bill/utils/custom_icons.dart';
-import 'package:split_the_bill/utils/debugging.dart';
-import 'package:split_the_bill/widgets/clippers/split_appbar_clipper.dart';
 
 class SplitScaffold extends StatelessWidget {
 
@@ -14,12 +11,13 @@ class SplitScaffold extends StatelessWidget {
   final SvgPicture icon;
   final IconButton navButton;
   final IconButton rightButton;
+  final IconButton helpButton;
   final Color colorLight;
   final Color colorDark;
   final Widget body;
   final Widget fab;
 
-  SplitScaffold({this.title, this.icon, this.navButton, this.rightButton, this.colorDark, this.colorLight, this.body, this.fab});
+  SplitScaffold({this.title, this.icon, this.navButton, this.rightButton, this.helpButton, this.colorDark, this.colorLight, this.body, this.fab});
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +39,12 @@ class SplitScaffold extends StatelessWidget {
               children: [
                 SizedBox(height: 50),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 28.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       icon,
-                      //IconButton(
-                      //  icon: Icon(CustomIcons.sign_in),
-                      //  onPressed: () {debug('sign in');},
-                      //  iconSize: 30,
-                      //  splashRadius: 25,
-                      //),
+                      if(helpButton != null) helpButton,
                     ],
                   ),
                 ),

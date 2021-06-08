@@ -31,4 +31,5 @@ class CustomIcons {
   static const IconData arrow = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData back = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData trash = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData help = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

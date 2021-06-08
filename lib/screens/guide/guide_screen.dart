@@ -16,8 +16,9 @@ class GuideScreen extends StatelessWidget {
 
   Rx<PageController> _pageController;
   Rx<int> page = 0.obs;
+  bool startup;
 
-  GuideScreen() {
+  GuideScreen({this.startup = true}) {
     _pageController = PageController(initialPage: 0).obs;
   }
 
@@ -55,7 +56,7 @@ class GuideScreen extends StatelessWidget {
           children: [
             Obx(() => Container(
               width: Get.width,
-              height: Get.height * 0.62,
+              height: Get.height * (startup ? 0.62 : 0.7),
               child: PageView(
                 children: items,
                 controller: _pageController.value,
@@ -88,12 +89,13 @@ class GuideScreen extends StatelessWidget {
                       onTap: () {
                         if(page.value < 2) _pageController.value.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                         else {
-                          onDone();
+                          if(startup) onDone();
+                          else Get.back();
                         }
                       },
                     ),
-                    SizedBox(height: 8),
-                    AnimatedOpacity(
+                    if(startup) SizedBox(height: 8),
+                    if(startup) AnimatedOpacity(
                       duration: Duration(milliseconds: 200),
                       curve: Curves.easeInOut,
                       opacity: page.value == 2 ? 0 : 1,

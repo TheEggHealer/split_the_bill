@@ -6,6 +6,7 @@ import 'package:split_the_bill/controllers/split_controller.dart';
 import 'package:split_the_bill/dialogs/reset_confirmation_dialog.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
 import 'package:split_the_bill/models/user_model.dart';
+import 'package:split_the_bill/screens/guide/guide_screen.dart';
 import 'package:split_the_bill/screens/split/add_split_item.dart';
 import 'package:split_the_bill/screens/split/add_split_user.dart';
 import 'package:split_the_bill/screens/split/split_done_screen.dart';
@@ -46,6 +47,14 @@ class MainSplitScreen extends StatelessWidget {
                 },
               ));
             } : null,
+            splashRadius: 20,
+            iconSize: 30,
+          ),
+          helpButton: IconButton(
+            icon: Icon(CustomIcons.help),
+            onPressed: () {
+              Get.to(GuideScreen(startup: false));
+            },
             splashRadius: 20,
             iconSize: 30,
           ),
