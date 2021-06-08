@@ -64,5 +64,13 @@ class SplitController extends GetxController {
     });
   }
 
+  void reset() {
+    items.clear();
+    users.removeRange(1, users.length);
+
+    calculateSplit();
+    refresh();
+  }
+
 
 }

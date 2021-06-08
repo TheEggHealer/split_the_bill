@@ -35,7 +35,7 @@ class AddSplitItem extends StatelessWidget {
     _buyerList = List<UserRadioCard>.from(controller.users.map((u) => UserRadioCard(u, buyerValue++, selectedBuyer, (value) => selectedBuyer.value = value)));
 
     _receiverList = List<UserToggleCard>.from(controller.users.map((u) {
-      return UserToggleCard(u, (controller.users.indexOf(u) == selectedBuyer.value).obs);
+      return UserToggleCard(u, (controller.items.isNotEmpty ? controller.items.last.receivers.contains(u) : controller.users.indexOf(u) == 0).obs);
     }));
   }
 
@@ -72,7 +72,7 @@ class AddSplitItem extends StatelessWidget {
     List<bool> selectedReceivers = getSelectedReceivers(_receiverList);
     item.setReceivers(controller.users.where((user) => selectedReceivers[index++]).toList());
 
-    item.setItemCost(double.parse(_costController.text.trim()));
+    item.setItemCost(double.parse(_costController.text.trim().replaceFirst(',', '.')));
     item.setItemName(_titleController.text.trim().isEmpty ? 'Item ${controller.items.length + 1}' : _titleController.text.trim());
 
     controller.addItem(item);
@@ -88,7 +88,7 @@ class AddSplitItem extends StatelessWidget {
     List<bool> selectedReceivers = getSelectedReceivers(_receiverList);
     editingModel.setReceivers(controller.users.where((user) => selectedReceivers[index++]).toList());
 
-    editingModel.setItemCost(double.parse(_costController.text));
+    editingModel.setItemCost(double.parse(_costController.text.trim().replaceFirst(',', '.')));
     editingModel.setItemName(_titleController.text.isEmpty ? 'Item ${controller.items.length + 1}' : _titleController.text);
 
     controller.calculateSplit();

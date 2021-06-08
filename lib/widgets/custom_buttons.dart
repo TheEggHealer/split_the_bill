@@ -40,7 +40,7 @@ Widget authButton({String text, Function onTap}) {
 }
 */
 
-Widget authButton({String text, Function onTap}) {
+Widget authButton({String text, Function onTap, double hPadding = 40}) {
   ThemeData theme = Get.theme;
 
   ButtonStyle style = ButtonStyle(
@@ -55,7 +55,7 @@ Widget authButton({String text, Function onTap}) {
   );
 
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 40),
+    padding: EdgeInsets.symmetric(horizontal: hPadding),
     child: SizedBox(
       width: double.infinity,
       height: 50,

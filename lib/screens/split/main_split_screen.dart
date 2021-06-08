@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
+import 'package:split_the_bill/dialogs/reset_confirmation_dialog.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
 import 'package:split_the_bill/models/user_model.dart';
 import 'package:split_the_bill/screens/split/add_split_item.dart';
@@ -17,8 +18,6 @@ import 'package:split_the_bill/widgets/custom_buttons.dart';
 import 'package:split_the_bill/widgets/scaffolds/split_scaffold.dart';
 
 class MainSplitScreen extends StatelessWidget {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +42,18 @@ class MainSplitScreen extends StatelessWidget {
           colorDark: Color(0xFFFFF3C9),
           colorLight: Color(0xFFFFFCE3),
           icon: SvgPicture.asset('assets/split_dollar.svg'),
+          rightButton: IconButton(
+            icon: Icon(CustomIcons.sign_in),
+            onPressed: () {
+              Get.dialog(ResetConfirmationDialog(
+                callback: (ans) {
+                  if(ans) controller.reset();
+                },
+              ));
+            },
+            splashRadius: 20,
+            iconSize: 30,
+          ),
           body: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(

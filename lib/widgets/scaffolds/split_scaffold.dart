@@ -13,12 +13,13 @@ class SplitScaffold extends StatelessWidget {
   final String title;
   final SvgPicture icon;
   final IconButton navButton;
+  final IconButton rightButton;
   final Color colorLight;
   final Color colorDark;
   final Widget body;
   final Widget fab;
 
-  SplitScaffold({this.title, this.icon, this.navButton, this.colorDark, this.colorLight, this.body, this.fab});
+  SplitScaffold({this.title, this.icon, this.navButton, this.rightButton, this.colorDark, this.colorLight, this.body, this.fab});
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +57,17 @@ class SplitScaffold extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: navButton == null ? 24 : 8),
+                  padding: EdgeInsets.symmetric(horizontal: navButton == null ? 28 : 8),
                   child: Row(
                     children: [
                       if(navButton != null) navButton,
-                      Text(
-                        title,
-                        style: theme.textTheme.headline1,
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: theme.textTheme.headline1,
+                        ),
                       ),
+                      if(rightButton != null) rightButton,
                     ],
                   ),
                 ),

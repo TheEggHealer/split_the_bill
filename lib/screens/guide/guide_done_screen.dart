@@ -69,7 +69,7 @@ class GuideDoneScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 15),
                           Column(
-                            children: [SplitDoneRow(PaymentModel(model.users.first, model.users.last, 10)), SplitDoneRow.guide()],
+                            children: [SplitDoneRow(PaymentModel(model.users.last, model.users.first, 10)), SplitDoneRow.guide()],
                           ),
                         ],
                       ),

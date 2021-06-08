@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:split_the_bill/controllers/split_controller.dart';
+import 'package:split_the_bill/dialogs/reset_confirmation_dialog.dart';
 import 'package:split_the_bill/models/payment_model.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
 import 'package:split_the_bill/utils/custom_icons.dart';
@@ -21,7 +22,7 @@ import 'package:split_the_bill/widgets/scaffolds/split_scaffold.dart';
 import 'package:split_the_bill/widgets/split_done_row.dart';
 
 class SplitDoneScreen extends StatelessWidget {
-  GlobalKey _globalKey = GlobalKey();
+  final GlobalKey _globalKey = GlobalKey();
 
   List<SplitDoneRow> splitRows(List<PaymentModel> payments) {
     return payments.map((payment) => SplitDoneRow(payment)).toList();
@@ -86,8 +87,6 @@ class SplitDoneScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Get.theme;
-
     List<PaymentModel> payments = calculate();
     List<SplitDoneRow> rows = splitRows(payments);
 
@@ -153,20 +152,24 @@ class SplitDoneScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: 20),
+                authButton(
+                  text: 'Create new split!',
+                  hPadding: 16,
+                  onTap: () {
+                    Get.dialog(ResetConfirmationDialog(
+                      callback: (ans) {
+                        if(ans) {
+                          controller.reset();
+                          Get.back();
+                        }
+                      },
+                    ));
+                  },
+                ),
                 SizedBox(height: 80),
               ],
             ),
-          ),
-          fab: FloatingActionButton(
-            child: Icon(
-              Icons.done,
-              size: 32,
-              color: theme.backgroundColor,
-            ),
-            backgroundColor: theme.accentColor,
-            onPressed: () {
-
-            },
           ),
         );
       },
