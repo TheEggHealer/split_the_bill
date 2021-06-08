@@ -16,8 +16,8 @@ class UserColorPreviewCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
       ),
       child: Container(
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 72,
         child: Center(
           child: Icon(
             CustomIcons.profile,

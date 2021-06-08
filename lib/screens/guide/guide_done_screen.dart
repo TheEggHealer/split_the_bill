@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:split_the_bill/models/payment_model.dart';
 import 'package:split_the_bill/models/split_model.dart';
@@ -32,45 +33,51 @@ class GuideDoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Get.theme;
 
-    return GuideScaffold(
-      title: 'Done',
-      last: true,
-      counterText: '3 / 3',
-      backButton: IconButton(
-        icon: Icon(CustomIcons.back),
-        onPressed: () {Get.back();},
-        splashRadius: 20,
-        iconSize: 30,
-      ),
-      onContinue: () async {
-        UserModel user = Get.find();
-        SplitUserModel createdUser = await Get.to(() => AddSplitUser.create());
-        user.create(createdUser.name, createdUser.color);
-
-        Get.until((route) => route.isFirst);
+    return ShaderMask(
+      shaderCallback: (Rect bounds) {
+        return LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.9, 1],
+          colors: [Colors.transparent, Colors.white],
+        ).createShader(bounds);
       },
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            GradientCard(
-              colorTop: Color(0xFFFFFFFF),
-              colorBottom: Color(0xFFEFFFF4),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Optimal split',
-                      style: theme.textTheme.headline2,
+      blendMode: BlendMode.dstOut,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Done',
+                  style: theme.textTheme.headline2,
+                ),
+              ),
+              Column(
+                children: [
+                  GradientCard(
+                    colorTop: Color(0xFFFFFFFF),
+                    colorBottom: Color(0xFFEFFFF4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: SvgPicture.asset('assets/split_dollar.svg'),
+                          ),
+                          SizedBox(height: 15),
+                          Column(
+                            children: [SplitDoneRow(PaymentModel(model.users.first, model.users.last, 10)), SplitDoneRow.guide()],
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 15),
-                    Column(
-                      children: [SplitDoneRow(PaymentModel(model.users.first, model.users.last, 10)), SplitDoneRow.guide()],
-                    ),
-                    SizedBox(height: 30,),
-                    Row(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
                       children: [
                         raisedButton(
                           text: 'Copy as text',
@@ -83,23 +90,23 @@ class GuideDoneScreen extends StatelessWidget {
                           text: 'Share',
                           icon: CustomIcons.edit,
                           expand: true,
-                          enabled: false,
+                          enabled: false
                         ),
                       ],
-                    )
-                  ],
+                    ),
+                  )
+                ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  'When all items have been added, tap the "Solve split" button. This will show all the payments needed to equally split the bill. The split can then be copied as plain text or shared as a picture.',
+                  style: theme.textTheme.bodyText1,
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(
-                'When all items have been added, tap the "solve" button. This will show all the payments needed to equally split the bill. The split can then be copied as plain text or shared as a picture.',
-                style: theme.textTheme.bodyText1,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

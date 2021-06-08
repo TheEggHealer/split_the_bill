@@ -117,15 +117,13 @@ class SplitDoneScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Optimal split',
-                            style: theme.textTheme.headline2,
+                          Center(
+                            child: SvgPicture.asset('assets/split_dollar.svg'),
                           ),
                           SizedBox(height: 15),
                           Column(
                             children: rows,
                           ),
-                          SizedBox(height: 30,),
                         ],
                       ),
                     ),
@@ -154,7 +152,8 @@ class SplitDoneScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
+                SizedBox(height: 80),
               ],
             ),
           ),

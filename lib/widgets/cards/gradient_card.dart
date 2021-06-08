@@ -20,9 +20,9 @@ class GradientCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(16)),
-          gradient: LinearGradient(
-            begin: FractionalOffset(0, 0),
-            end: FractionalOffset(0, 1),
+          gradient: RadialGradient(
+            center: Alignment.topLeft,
+            radius: 1.5,
             colors: [colorTop, colorBottom],
             stops: [0, 1],
           ),

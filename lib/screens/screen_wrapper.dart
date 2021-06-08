@@ -26,7 +26,7 @@ class ScreenWrapper extends StatelessWidget {
       init: UserModel('initial'.obs, Colors.black.obs, created: false.obs),
       builder: (user) {
         Get.put(user);
-        getUserFromStorage(user);
+        //getUserFromStorage(user);
 
         return user.created.value ? MainSplitScreen() : LaunchScreen();
       },

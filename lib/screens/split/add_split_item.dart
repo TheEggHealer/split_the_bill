@@ -35,7 +35,7 @@ class AddSplitItem extends StatelessWidget {
     _buyerList = List<UserRadioCard>.from(controller.users.map((u) => UserRadioCard(u, buyerValue++, selectedBuyer, (value) => selectedBuyer.value = value)));
 
     _receiverList = List<UserToggleCard>.from(controller.users.map((u) {
-      return UserToggleCard(u, false.obs);
+      return UserToggleCard(u, (controller.users.indexOf(u) == selectedBuyer.value).obs);
     }));
   }
 
@@ -121,7 +121,7 @@ class AddSplitItem extends StatelessWidget {
         iconSize: 30,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 44),
         child: Form(
           key: _formKey,
           child: Column(
@@ -137,7 +137,7 @@ class AddSplitItem extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: inputField(
-                  title: 'Cost',
+                  title: 'Price *',
                   controller: _costController,
                   keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                   validator: (val) => val.isEmpty || double.tryParse(val) == null ? 'Enter valid number' : null,
@@ -145,7 +145,7 @@ class AddSplitItem extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Text(
-                'Buyer',
+                'Buyer *',
                 style: theme.textTheme.headline2,
               ),
               SizedBox(height: 10),
@@ -161,7 +161,7 @@ class AddSplitItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Receiver(s)',
+                    'Receiver(s) *',
                     style: theme.textTheme.headline2,
                   ),
                   raisedButton(

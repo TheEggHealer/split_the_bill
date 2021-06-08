@@ -92,7 +92,7 @@ class MainSplitScreen extends StatelessWidget {
                 Column(
                   children: _itemCards,
                 ),
-                SizedBox(height: 100),
+                SizedBox(height: 80),
               ],
             ),
           ),

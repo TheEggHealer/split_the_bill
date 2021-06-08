@@ -25,9 +25,28 @@ class GuideScaffold extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        constraints: BoxConstraints(
-          minHeight: height,
+        height: height,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 70, left: 24, right: 24),
+              child: Stack(
+                children: [
+                  if(backButton != null) backButton,
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Guide',
+                      style: theme.textTheme.headline1,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            body,
+          ],
         ),
+        /*
         child: Stack(
           fit: StackFit.loose,
           children: [
@@ -119,6 +138,7 @@ class GuideScaffold extends StatelessWidget {
             ),
           ],
         ),
+         */
       ),
     );
   }

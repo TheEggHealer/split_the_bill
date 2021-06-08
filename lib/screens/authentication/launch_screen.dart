@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:split_the_bill/models/split_user_model.dart';
 import 'package:split_the_bill/models/user_model.dart';
 import 'package:split_the_bill/screens/guide/guide_people_screen.dart';
+import 'package:split_the_bill/screens/guide/guide_screen.dart';
 import 'package:split_the_bill/screens/split/add_split_user.dart';
 import 'package:split_the_bill/screens/split/main_split_screen.dart';
 import 'package:split_the_bill/utils/debugging.dart';
@@ -27,7 +28,7 @@ class LaunchScreen extends StatelessWidget {
         child: authButton(
           text: 'Continue',
           onTap: () async {
-            await Get.to(() => GuidePeopleScreen());
+            await Get.to(() => GuideScreen());
             //SplitUserModel createdUser = await Get.to(() => AddSplitUser.create());
             //user.create(createdUser.name, createdUser.color);
             //debug(user.created);

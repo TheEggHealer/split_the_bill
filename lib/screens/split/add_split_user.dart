@@ -105,14 +105,14 @@ class AddSplitUser extends StatelessWidget {
         iconSize: 30,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 44),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               inputField(
-                title: 'Name',
+                title: 'Name *',
                 controller: _nameController,
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
               ),

@@ -45,12 +45,12 @@ class SplitScaffold extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       icon,
-                      IconButton(
-                        icon: Icon(CustomIcons.sign_in),
-                        onPressed: () {debug('sign in');},
-                        iconSize: 30,
-                        splashRadius: 25,
-                      ),
+                      //IconButton(
+                      //  icon: Icon(CustomIcons.sign_in),
+                      //  onPressed: () {debug('sign in');},
+                      //  iconSize: 30,
+                      //  splashRadius: 25,
+                      //),
                     ],
                   ),
                 ),

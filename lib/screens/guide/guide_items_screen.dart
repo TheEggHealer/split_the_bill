@@ -41,68 +41,73 @@ class GuideItemsScreen extends StatelessWidget {
     List<SplitUserCard> userCards = model.users.map((user) => SplitUserCard(user)).toList()..addAll([SplitUserCard.guide(), SplitUserCard.guide()]);
 
 
-    return GuideScaffold(
-      title: 'Items',
-      last: false,
-      counterText: '2 / 3',
-      backButton: IconButton(
-        icon: Icon(CustomIcons.back),
-        onPressed: () {Get.back();},
-        splashRadius: 20,
-        iconSize: 30,
-      ),
-      onContinue: () {
-        Get.to(() => GuideDoneScreen());
+    return ShaderMask(
+      shaderCallback: (Rect bounds) {
+        return LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.95, 1],
+          colors: [Colors.transparent, Colors.white],
+        ).createShader(bounds);
       },
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            GradientCard(
-              colorTop: theme.cardColor,
-              colorBottom: Color(0xFFEEFFE7),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Wrap(
-                      direction: Axis.horizontal,
-                      children: userCards,
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      child: Row(
-                        children: [
-                          raisedButton(
-                            text: 'Add member',
-                            icon: Icons.add,
-                            expand: true,
-                            enabled: false,
-                          ),
-                          SizedBox(width: 25,),
-                          raisedButton(
-                            text: 'Solve split',
-                            icon: Icons.done,
-                            expand: true,
-                            enabled: false,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+      blendMode: BlendMode.dstOut,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Items',
+                  style: theme.textTheme.headline2,
                 ),
               ),
-            ),
-            SplitItemCard(model.items.first, guide: true,),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(
-                'Items show what has been bought, how much it cost and how it affects the split. To add a new item, press the “+” button in the bottom right corner. ',
-                style: theme.textTheme.bodyText1,
+              GradientCard(
+                colorTop: theme.cardColor,
+                colorBottom: Color(0xFFEEFFE7),
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Wrap(
+                        direction: Axis.horizontal,
+                        children: userCards,
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Row(
+                          children: [
+                            raisedButton(
+                              text: 'Add member',
+                              icon: Icons.add,
+                              expand: true,
+                              enabled: false,
+                            ),
+                            SizedBox(width: 25,),
+                            raisedButton(
+                              text: 'Solve split',
+                              icon: Icons.done,
+                              expand: true,
+                              enabled: false,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+              SplitItemCard(model.items.first, guide: true,),
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  'Items show what has been bought, how much it cost and how it affects the split. To add a new item, press the “+” button in the bottom right corner. ',
+                  style: theme.textTheme.bodyText1,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
