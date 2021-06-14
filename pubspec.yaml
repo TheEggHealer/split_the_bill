@@ -1,5 +1,4 @@
 name: split_the_bill
-description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
