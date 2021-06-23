@@ -86,36 +86,54 @@ Widget authButton({String text, Function onTap, double hPadding = 40}) {
   );
 }
 
-Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap, Color color, bool enabled = true}) {
+Widget raisedButton({String text, bool expand = false, IconData icon, Function onTap, Color color, bool enabled = true, bool decorated = false}) {
   ThemeData theme = Get.theme;
 
   ButtonStyle style = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+    overlayColor: MaterialStateProperty.all(theme.splashColor),
+    padding: MaterialStateProperty.all(EdgeInsets.zero),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(25),
+    )),
     elevation: MaterialStateProperty.all(enabled ? 5 : 0),
     shadowColor: MaterialStateProperty.all(Color(0x60000000)),
-    backgroundColor: MaterialStateProperty.all<Color>(enabled ? (color == null ? theme.accentColor : color) : theme.disabledColor),
-    foregroundColor: MaterialStateProperty.all(theme.backgroundColor),
-    overlayColor: MaterialStateProperty.all(theme.splashColor),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(16)),
-    )),
   );
 
   Widget button = SizedBox(
     height: 32,
     child: ElevatedButton(
       style: style,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if(icon != null) Icon(icon, size: 15,),
-          if(icon != null) SizedBox(width: 5,),
-          AutoSizeText(
-            text,
-            style: theme.textTheme.bodyText2.apply(color: theme.backgroundColor),
+      child: Ink(
+        decoration: BoxDecoration(
+          gradient: decorated && enabled ? LinearGradient(
+            colors: [Color(0xffF5DF90), Color(0xffE9C48D)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ) : null,
+          color: !enabled ? theme.disabledColor : (!decorated ? theme.accentColor : null),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: !expand ? 12 : 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if(icon != null) Icon(icon, size: 15, color: theme.backgroundColor),
+                  if(icon != null) SizedBox(width: 5,),
+                  AutoSizeText(
+                    text,
+                    style: theme.textTheme.bodyText2.apply(color: theme.backgroundColor),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
+        ),
       ),
       onPressed: enabled ? onTap : null,
     ),

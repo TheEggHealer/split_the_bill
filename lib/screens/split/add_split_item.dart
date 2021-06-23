@@ -128,7 +128,7 @@ class AddSplitItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               inputField(
-                title: 'Item',
+                title: 'What was bought?',
                 hint: 'Item ${controller.items.length + 1}',
                 controller: _titleController,
                 validator: (val) => null,
@@ -145,7 +145,7 @@ class AddSplitItem extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Text(
-                'Buyer *',
+                'Who paid? *',
                 style: theme.textTheme.headline2,
               ),
               SizedBox(height: 10),
@@ -161,7 +161,7 @@ class AddSplitItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Receiver(s) *',
+                    'Who received it? *',
                     style: theme.textTheme.headline2,
                   ),
                   raisedButton(

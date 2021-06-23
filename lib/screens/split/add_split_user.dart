@@ -118,13 +118,23 @@ class AddSplitUser extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Text(
-                'Color',
+                'Color *',
                 style: theme.textTheme.headline2,
               ),
               SizedBox(height: 10),
               Row(
                 children: [
-                  Obx(() => UserColorPreviewCard(_selectedColor.value)),
+                  Obx(() => UserColorPreviewCard(
+                    _selectedColor.value,
+                    onTap: () {
+                      Get.dialog(ColorPickerDialog(
+                          currentColor: _selectedColor.value.obs,
+                          onDone: (color) {
+                            _selectedColor.value = color;
+                          }
+                      ));
+                    },
+                  )),
                   SizedBox(width: 10,),
                   Material(
                     color: Colors.transparent,

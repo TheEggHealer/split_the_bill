@@ -88,7 +88,7 @@ class GuideDoneScreen extends StatelessWidget {
                         SizedBox(width: 25,),
                         raisedButton(
                           text: 'Share',
-                          icon: CustomIcons.edit,
+                          icon: Icons.share,
                           expand: true,
                           enabled: false
                         ),
@@ -101,7 +101,7 @@ class GuideDoneScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
-                  'When all items have been added, tap the "Solve split" button. This will show all the payments needed to equally split the bill. The split can then be copied as plain text or shared as a picture.',
+                  'When all items have been added, tap the "Done" button. This will show all the payments needed to equally split the bill. The split can then be copied as plain text or shared as a picture.',
                   style: theme.textTheme.bodyText1,
                 ),
               ),

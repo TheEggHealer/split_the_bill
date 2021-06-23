@@ -57,7 +57,7 @@ class GuidePeopleScreen extends StatelessWidget {
                             ),
                             SizedBox(width: 25,),
                             raisedButton(
-                              text: 'Solve split',
+                              text: 'Done',
                               icon: Icons.done,
                               expand: true,
                               enabled: false,

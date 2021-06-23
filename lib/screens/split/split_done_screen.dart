@@ -143,7 +143,7 @@ class SplitDoneScreen extends StatelessWidget {
                       SizedBox(width: 25,),
                       raisedButton(
                         text: 'Share',
-                        icon: CustomIcons.edit,
+                        icon: Icons.share,
                         expand: true,
                         onTap: () {
                           share();
