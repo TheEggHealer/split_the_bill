@@ -1,5 +1,5 @@
 [ ] Update version number (yaml)
-[ ] Disable debugging prints (constants.dart)
+[ ] Disable debugging prints (debugging.dart)
 
 Building:
 run: flutter build appbundle

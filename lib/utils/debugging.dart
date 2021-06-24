@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-final bool printDebug = true;
+final bool printDebug = false;
 
 void debug(Object obj) {
   if(printDebug) {
