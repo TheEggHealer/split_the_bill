@@ -59,9 +59,11 @@ class SplitUserCard extends StatelessWidget {
                   size: 30,
                 ),
                 AutoSizeText(
-                  '${_model.name}',
+                  '${_model.name.length >= 15 ? _model.name.replaceRange(12, _model.name.length, '... ') : _model.name}',
                   style: theme.textTheme.headline4,
+                  minFontSize: 8,
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 if(!onlyName) AutoSizeText(
                   signedString(_model.split),

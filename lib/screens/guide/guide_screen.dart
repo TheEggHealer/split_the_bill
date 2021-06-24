@@ -44,7 +44,7 @@ class GuideScreen extends StatelessWidget {
       backButton: IconButton(
         icon: Icon(CustomIcons.back),
         onPressed: () {
-          if(page.value > 0) _pageController.value.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+          if(page.value > 0) _pageController.value.previousPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
           else Get.back();
         },
         splashRadius: 20,
@@ -87,7 +87,7 @@ class GuideScreen extends StatelessWidget {
                     authButton(
                       text: page.value == 2 ? 'Continue' : 'Next',
                       onTap: () {
-                        if(page.value < 2) _pageController.value.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                        if(page.value < 2) _pageController.value.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                         else {
                           if(startup) onDone();
                           else Get.back();
@@ -99,12 +99,15 @@ class GuideScreen extends StatelessWidget {
                       duration: Duration(milliseconds: 200),
                       curve: Curves.easeInOut,
                       opacity: page.value == 2 ? 0 : 1,
-                      child: raisedButton(
-                        text: 'Skip',
-                        icon: CustomIcons.arrow,
-                        onTap: () {
-                          if(page.value < 2) onDone();
-                        },
+                      child: Container(
+                        width: 150,
+                        child: raisedButton(
+                          text: 'Skip',
+                          icon: CustomIcons.arrow,
+                          onTap: () {
+                            if(page.value < 2) onDone();
+                          },
+                        ),
                       ),
                     ),
                   ],

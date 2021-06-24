@@ -122,6 +122,7 @@ Widget raisedButton({String text, bool expand = false, IconData icon, Function o
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   if(icon != null) Icon(icon, size: 15, color: theme.backgroundColor),
                   if(icon != null) SizedBox(width: 5,),
